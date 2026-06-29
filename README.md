@@ -22,6 +22,8 @@ Optionally pass a **design doc** (`design.md`) and its guidelines are injected i
 
 ![design-guided comparison](assets/example-design-doc-comparison.png)
 
+See [EXAMPLE_OUTPUT.md](EXAMPLE_OUTPUT.md) for a full run across all cases (single/2/3 models, design doc, and error handling) with costs.
+
 ---
 
 ## What it's good for
