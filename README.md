@@ -24,8 +24,24 @@ Optionally pass a **design doc** (`design.md`) and its guidelines are injected i
 
 ---
 
+## What it's good for
+
+Anywhere you'd otherwise guess which model to use — generate once, compare, ship the best:
+
+- **Blog cover images** — hero/header art at your exact `1600x900`.
+- **YouTube / video thumbnails** — eye-catching `1280x720` frames, three takes at once.
+- **Social / OG preview images** — `1200x630` link cards and `1500x500` X headers.
+- **App store & marketing screenshots / promo art** at fixed dimensions.
+- **Logos, mascots & brand art** — pair with a `design.md` so every model stays on-brand.
+- **Ad creatives & A/B variants** — get distinct directions in one pass to test.
+- **Product mockups, icons, and spot illustrations** for docs and decks.
+- **Model evaluation** — a quick, repeatable bake-off when you're deciding which image model to standardize on.
+
+---
+
 ## Table of contents
 
+- [What it's good for](#what-its-good-for)
 - [Prerequisites](#prerequisites)
 - [Set your OpenRouter API key](#set-your-openrouter-api-key)
 - [Install — pick your path](#install--pick-your-path)
@@ -77,24 +93,24 @@ chmod 600 ~/.config/openrouter/key
 This repo is its own plugin **marketplace**, so installation is two commands inside Claude Code:
 
 ```text
-/plugin marketplace add iayanpahwa/ai-image-gen
-/plugin install gen-image-compare@ai-image-gen
+/plugin marketplace add iayanpahwa/model-montage
+/plugin install gen-image-compare@model-montage
 /reload-plugins
 ```
 
-Verify with `/plugin` — you should see `gen-image-compare@ai-image-gen` enabled. Done — now just talk to it (see [Using it inside Claude Code](#using-it-inside-claude-code)).
+Verify with `/plugin` — you should see `gen-image-compare@model-montage` enabled. Done — now just talk to it (see [Using it inside Claude Code](#using-it-inside-claude-code)).
 
 ### B. Claude Code plugin from a local clone
 
 Useful for hacking on the skill or installing offline:
 
 ```bash
-git clone https://github.com/iayanpahwa/ai-image-gen.git
+git clone https://github.com/iayanpahwa/model-montage.git
 ```
 
 ```text
-/plugin marketplace add /absolute/path/to/ai-image-gen
-/plugin install gen-image-compare@ai-image-gen
+/plugin marketplace add /absolute/path/to/model-montage
+/plugin install gen-image-compare@model-montage
 /reload-plugins
 ```
 
@@ -107,7 +123,7 @@ The skill is self‑contained — a `SKILL.md` plus one Python script. Copy the 
 ```bash
 # Claude Code (user-level skills)
 mkdir -p ~/.claude/skills
-cp -r ai-image-gen/skills/gen-image-compare ~/.claude/skills/
+cp -r model-montage/skills/gen-image-compare ~/.claude/skills/
 ```
 
 It loads on the next session (or `/reload-plugins`). The same folder works in **any agent that follows the `SKILL.md` convention** — drop `skills/gen-image-compare/` into that tool's skills location. The instructions in `SKILL.md` are plain Markdown and reference only `generate.py`, so there's nothing tool‑specific to port.
@@ -117,8 +133,8 @@ It loads on the next session (or `/reload-plugins`). The same folder works in **
 `generate.py` is a standalone CLI; you don't need Claude Code at all:
 
 ```bash
-git clone https://github.com/iayanpahwa/ai-image-gen.git
-cd ai-image-gen
+git clone https://github.com/iayanpahwa/model-montage.git
+cd model-montage
 pip install pillow
 export OPENROUTER_API_KEY="sk-or-..."
 
@@ -227,13 +243,13 @@ Notes:
 
 ```text
 # Update to the latest published version
-/plugin marketplace update ai-image-gen
-/plugin install gen-image-compare@ai-image-gen
+/plugin marketplace update model-montage
+/plugin install gen-image-compare@model-montage
 /reload-plugins
 
 # Remove it
-/plugin uninstall gen-image-compare@ai-image-gen
-/plugin marketplace remove ai-image-gen
+/plugin uninstall gen-image-compare@model-montage
+/plugin marketplace remove model-montage
 ```
 
 Manual install: delete `~/.claude/skills/gen-image-compare/`.
