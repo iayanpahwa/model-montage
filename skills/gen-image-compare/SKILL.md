@@ -32,7 +32,7 @@ Run one prompt through multiple OpenRouter image models at once and compare the 
    # other dir: --out-dir ~/Desktop
    ```
 
-5. Parse the script output (per-model `STATUS` / `SAVED` / `COST`, plus `DESIGN_DOC`, `MONTAGE`, and `TOTAL_COST`). Report each model's saved path and cost (and note the design doc if one was applied), then surface every saved image **and** the montage inline with the **SendUserFile** tool.
+5. Parse the script output (per-model `STATUS` / `SAVED` / `COST`, plus `DESIGN_DOC`, `MONTAGE`, and `TOTAL_COST`). Report each model's saved path and cost, **always state the `TOTAL_COST` at the end**, note the design doc if one was applied, then surface every saved image **and** the montage inline with the **SendUserFile** tool.
 
 ## Notes
 

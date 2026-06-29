@@ -1,6 +1,10 @@
-# Generated images
+# Generated images (from running the tool)
 image_*.png
 compare_*.png
+
+# Local test artifacts — not published
+verify/
+example.md
 
 # Python
 __pycache__/

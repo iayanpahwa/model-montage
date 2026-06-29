@@ -12,6 +12,18 @@ Optionally pass a **design doc** (`design.md`) and its guidelines are injected i
 
 ---
 
+## Examples
+
+**One prompt, three models, side by side.** Prompt: *"a red fox sitting in fresh snow, cinematic lighting"* at `1200x630`. Each panel is labeled with the model and its cost:
+
+![3-model comparison](assets/example-3-model-comparison.png)
+
+**With a design doc, every model follows the same brand.** Prompt: *"a fox mascot logo"* at `1024x1024` with a `design.md` specifying a deep-navy + warm-gold flat-vector style — all three obey it:
+
+![design-guided comparison](assets/example-design-doc-comparison.png)
+
+---
+
 ## Table of contents
 
 - [Prerequisites](#prerequisites)
