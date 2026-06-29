@@ -87,7 +87,7 @@ def generate_one(slug, model_id, prompt, w, h, api_key, out_dir, ts, design_text
     design_block = ""
     if design_text:
         design_block = (
-            "Strictly follow the design guidelines below — treat them as authoritative for "
+            "Strictly follow the design guidelines below - treat them as authoritative for "
             "layout, color palette, typography, spacing, visual style, and branding:\n"
             "--- BEGIN DESIGN GUIDELINES ---\n"
             f"{design_text}\n"

@@ -10,7 +10,7 @@
   },
   "plugins": [
     {
-      "name": "gen-image-compare",
+      "name": "model-montage",
       "source": "./",
       "description": "Generate one prompt across up to three OpenRouter image models in parallel (Nano Banana Pro, Nano Banana 2, GPT-5.4 Image 2), crop each to an exact resolution, and build a labeled comparison montage.",
       "version": "1.0.0",
