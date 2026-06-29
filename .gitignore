@@ -1,0 +1,7 @@
+# Generated images
+image_*.png
+compare_*.png
+
+# Python
+__pycache__/
+*.pyc

@@ -1,0 +1,20 @@
+{
+  "name": "gen-image-compare",
+  "description": "Generate one prompt across up to three OpenRouter image models in parallel (Nano Banana Pro, Nano Banana 2, GPT-5.4 Image 2), crop each to an exact resolution, and build a labeled comparison montage.",
+  "version": "1.0.0",
+  "author": {
+    "name": "iayanpahwa"
+  },
+  "license": "MIT",
+  "keywords": [
+    "image-generation",
+    "openrouter",
+    "gemini",
+    "gpt-image",
+    "comparison",
+    "nano-banana"
+  ],
+  "skills": [
+    "./skills/gen-image-compare"
+  ]
+}

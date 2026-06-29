@@ -1,0 +1,28 @@
+{
+  "name": "ai-image-gen",
+  "id": "ai-image-gen",
+  "owner": {
+    "name": "iayanpahwa"
+  },
+  "metadata": {
+    "description": "Multi-model image generation tools for Claude Code via OpenRouter.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "gen-image-compare",
+      "source": "./",
+      "description": "Generate one prompt across up to three OpenRouter image models in parallel (Nano Banana Pro, Nano Banana 2, GPT-5.4 Image 2), crop each to an exact resolution, and build a labeled comparison montage.",
+      "version": "1.0.0",
+      "author": {
+        "name": "iayanpahwa"
+      },
+      "keywords": [
+        "image-generation",
+        "openrouter",
+        "comparison"
+      ],
+      "category": "design"
+    }
+  ]
+}
