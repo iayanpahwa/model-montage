@@ -82,10 +82,20 @@ def resolve_api_key(cli_key):
     )
 
 
-def generate_one(slug, model_id, prompt, w, h, api_key, out_dir, ts):
+def generate_one(slug, model_id, prompt, w, h, api_key, out_dir, ts, design_text=None):
     """Call one model, crop-to-fill to WxH, save. Returns a result dict."""
+    design_block = ""
+    if design_text:
+        design_block = (
+            "Strictly follow the design guidelines below — treat them as authoritative for "
+            "layout, color palette, typography, spacing, visual style, and branding:\n"
+            "--- BEGIN DESIGN GUIDELINES ---\n"
+            f"{design_text}\n"
+            "--- END DESIGN GUIDELINES ---\n\n"
+        )
     full_prompt = (
         f"{prompt}\n\n"
+        f"{design_block}"
         f"Compose this as a {aspect_hint(w, h)} image. Fill the entire frame edge to edge; "
         f"do not add borders, letterboxing, or padding."
     )
@@ -178,6 +188,11 @@ def main():
     ap.add_argument("--out-dir", default=None, help="output dir (default: cwd)")
     ap.add_argument("--api-key", default=None, help="override $OPENROUTER_API_KEY")
     ap.add_argument("--no-montage", action="store_true", help="skip comparison sheet")
+    ap.add_argument(
+        "--design",
+        default=None,
+        help="path to a design doc (e.g. design.md); its contents are sent to every model",
+    )
     args = ap.parse_args()
 
     w, h = parse_size(args.size)
@@ -187,9 +202,30 @@ def main():
     os.makedirs(out_dir, exist_ok=True)
     ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
+    design_text = None
+    if args.design:
+        design_path = os.path.abspath(os.path.expanduser(args.design))
+        if not os.path.isfile(design_path):
+            sys.exit(f"Design doc not found: {design_path}")
+        with open(design_path, encoding="utf-8") as f:
+            design_text = f.read().strip()
+        if not design_text:
+            sys.exit(f"Design doc is empty: {design_path}")
+
     with ThreadPoolExecutor(max_workers=len(models)) as ex:
         futures = [
-            ex.submit(generate_one, slug, mid, args.prompt, w, h, api_key, out_dir, ts)
+            ex.submit(
+                generate_one,
+                slug,
+                mid,
+                args.prompt,
+                w,
+                h,
+                api_key,
+                out_dir,
+                ts,
+                design_text,
+            )
             for slug, mid in models
         ]
         results = [f.result() for f in futures]
@@ -216,6 +252,7 @@ def main():
         print("---")
 
     print(f"RESOLUTION: {w}x{h} (center crop-to-fill applied)")
+    print(f"DESIGN_DOC: {design_path if design_text else '(none)'}")
     print(f"MONTAGE: {montage if montage else '(skipped)'}")
     print(f"TOTAL_COST: {total}")
 

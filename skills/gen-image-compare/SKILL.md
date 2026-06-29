@@ -18,22 +18,27 @@ Run one prompt through multiple OpenRouter image models at once and compare the 
 
 2. **Decide how many / which models.** Default is **all three**. If the user asked for **1 or 2** images and didn't name the models, ask which of `gemini-3-pro` / `gemini-3.1-flash` / `gpt-5.4-image-2` they want, then pass them via `--models` (comma-separated). With a single model the montage is skipped automatically.
 
-3. Run the script (use `$CLAUDE_PLUGIN_ROOT` when installed as a plugin; otherwise the local path):
+3. **Optional design doc.** If the user provides or points to a design doc (a `design.md` or any markdown/text file describing palette, typography, layout, branding, or style), pass it via `--design <path>` — its contents are injected into the prompt for **every** model so they all follow the same guidelines. If a `design.md` exists in the working directory and the user is doing design/brand work, offer to include it rather than assuming. Omit `--design` entirely when there's no design doc.
+
+4. Run the script (use `$CLAUDE_PLUGIN_ROOT` when installed as a plugin; otherwise the local path):
    ```bash
    python3 "$CLAUDE_PLUGIN_ROOT/skills/gen-image-compare/generate.py" \
      --prompt "your prompt here" \
      --size 1200x630
    # subset example:
    #   --models gemini-3.1-flash,gpt-5.4-image-2
+   # with a design doc:
+   #   --design ./design.md
    # other dir: --out-dir ~/Desktop
    ```
 
-4. Parse the script output (per-model `STATUS` / `SAVED` / `COST`, plus `MONTAGE` and `TOTAL_COST`). Report each model's saved path and cost, then surface every saved image **and** the montage inline with the **SendUserFile** tool.
+5. Parse the script output (per-model `STATUS` / `SAVED` / `COST`, plus `DESIGN_DOC`, `MONTAGE`, and `TOTAL_COST`). Report each model's saved path and cost (and note the design doc if one was applied), then surface every saved image **and** the montage inline with the **SendUserFile** tool.
 
 ## Notes
 
 - **API key sourcing order:** `$OPENROUTER_API_KEY` → `~/.config/openrouter/key` → `--api-key`. If none is found the script exits with a message. In that case, ask the user for their key and offer to save it: `mkdir -p ~/.config/openrouter && printf '%s' "<key>" > ~/.config/openrouter/key && chmod 600 ~/.config/openrouter/key`. Never echo the key back.
 - **Partial failure is tolerated:** if one model errors, the others still save; report which failed and why. The script only errors out if *all* models fail.
+- **Design doc:** `--design` accepts any text/markdown file, not just one literally named `design.md`. Its full contents are sent to every model, so very long docs add some token cost. If the path is missing or empty the script exits with a clear error before any API call.
 - **Cost:** Pro is the most expensive, Flash the cheapest — mention this if the user is cost-sensitive or running all three repeatedly.
 - For text-in-image (logos, taglines), warn that the models approximate text; verify spelling after generation.
 - Requires Pillow (`PIL`) and Python 3.
